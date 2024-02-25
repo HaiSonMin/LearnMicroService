@@ -1,0 +1,69 @@
+############## create k8s posts service ##############
+1. docker build -t haison/posts .
+2. docker push DockerHubName/posts 
+3. kubectl apply -f posts-depl.yml
+
+############## create k8s comments service ##############
+1. docker build -t haison/comments .
+2. docker push DockerHubName/comments
+3. kubectl apply -f comments-depl.yml
+
+############## create k8s query service ##############
+1. docker build -t haison/query .
+2. docker push DockerHubName/query
+3. kubectl apply -f query-depl.yml
+
+############## create k8s moderation service ##############
+1. docker build -t haison/moderation .
+2. docker push DockerHubName/moderation
+3. kubectl apply -f moderation-depl.yml
+
+############## create k8s event-bus service ##############
+1. docker build -t haison/event-bus .
+2. docker push DockerHubName/event-bus 
+3. kubectl apply -f event-bus-depl.yml
+
+Node: 
+kubectl apply -f posts-depl.yml
+kubectl apply -f comments-depl.yml
+kubectl apply -f query-depl.yml
+kubectl apply -f moderation-depl.yml
+kubectl apply -f event-bus-depl.yml
+kubectl apply -f ingress-srv.yml
+=====> kubectl apply -f . (apply all file)
+
+
+############################ Update service when change code ############################
+# Post
+1. docker build -t haison/posts .
+2. docker push DockerHubName/posts 
+3. kubectl rollout restart deployment posts-depl
+
+# event-bus
+1. docker build -t haison/event-bus .
+2. docker push DockerHubName/event-bus 
+3. kubectl rollout restart deployment event-bus-depl
+
+# comments
+1. docker build -t haison/comments .
+2. docker push DockerHubName/comments 
+3. kubectl rollout restart deployment comments-depl
+
+# query
+1. docker build -t haison/query .
+2. docker push DockerHubName/query 
+3. kubectl rollout restart deployment query-depl
+
+# moderation
+1. docker build -t haison/moderation .
+2. docker push DockerHubName/moderation 
+3. kubectl rollout restart deployment moderation-depl
+
+
+############## Cmd checking ##############
+- kubectl get pods
+- kubectl get deployments
+- kubectl get services
+- kubectl logs pod {pod-name}
+- kubectl describe pod {pod-name}
+
